@@ -94,7 +94,7 @@ em { font-style: normal; }
 .hero .eyebrow { align-self: end; }
 .name {
   font-family: var(--display); font-weight: 600; margin: 0;
-  font-size: clamp(3.4rem, min(16.5vw, 25svh), 15rem); line-height: .86; letter-spacing: -.055em;
+  font-size: clamp(3rem, min(16.5vw, 21svh), 15rem); line-height: .86; letter-spacing: -.055em;
   font-variation-settings: "opsz" 32; transform-origin: left bottom;
 }
 .name em { padding-left: 0; }
@@ -224,7 +224,7 @@ footer { padding-block: 2rem 6rem; font-family: var(--mono); font-size: .7rem; l
   <a class="mark" href="#inicio">Luis G.</a>
   <ul>
     <li><a href="#sobre-mi">Sobre mí</a></li>
-    <li><a href="#algorithm-city">Proyectos</a></li>
+    <li><a href="#vygo">Proyectos</a></li>
     <li><a href="#stack">Stack</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
@@ -259,9 +259,27 @@ footer { padding-block: 2rem 6rem; font-family: var(--mono); font-size: .7rem; l
     </div>
   </section>
 
-  <section class="scene" id="algorithm-city" data-shape="2" data-x="0.26" data-title="Algorithm City">
+  <section class="scene" id="vygo" data-shape="8" data-x="0.26" data-title="VYGO">
     <div class="sticky"><div class="wrap">
       <div class="scene-inner">
+        <p class="eyebrow fade">Ganador · <b>HackMTY 2026</b></p>
+        <h2 class="title"><span class="reveal-line"><span>VYGO</span></span><span class="reveal-line"><span><em>Copiloto de reparto</em></span></span></h2>
+        <p class="lede fade">Para repartidores que trabajan con Uber Eats, Rappi y DiDi Food al mismo tiempo. Un agente de aprendizaje por refuerzo decide qué pedidos aceptar y cómo juntarlos en una sola ruta, y explica cada decisión con números.</p>
+        <ul class="facts fade">
+          <li><span>Reto</span><span>Infosys · “The Courier”</span></li>
+          <li><span>Resultado</span><span>En la simulación de un turno de 6 horas en Monterrey, la ganancia pasa de $102/h a $169/h con 35% menos kilómetros</span></li>
+          <li><span>Mi parte</span><span>Frontend mobile-first: mapa en vivo, recomendación del agente, ruta activa y login con Supabase</span></li>
+          <li><span>Stack</span><span>React · TypeScript · MapLibre · Supabase · FastAPI · PPO</span></li>
+        </ul>
+        <p class="tag fade">$102/h → $169/h · −35% km</p>
+        <div class="links fade"><a class="link" href="https://github.com/VYGO-Bug404/VYGO" target="_blank" rel="noopener">Ver en GitHub ↗</a></div>
+      </div>
+    </div></div>
+  </section>
+
+  <section class="scene" id="algorithm-city" data-shape="2" data-x="-0.26" data-title="Algorithm City">
+    <div class="sticky"><div class="wrap">
+      <div class="scene-inner right">
         <p class="eyebrow fade">Proyecto · <b>Juego educativo</b></p>
         <h2 class="title"><span class="reveal-line"><span>Algorithm</span></span><span class="reveal-line"><span><em>City</em></span></span></h2>
         <p class="lede fade">Un RPG en pixel art para aprender Python, algoritmos y LeetCode escribiendo código de verdad. Empiezas de becario y terminas listo para una entrevista en Big Tech.</p>
@@ -274,9 +292,9 @@ footer { padding-block: 2rem 6rem; font-family: var(--mono); font-size: .7rem; l
     </div></div>
   </section>
 
-  <section class="scene" id="exora" data-shape="3" data-x="-0.26" data-title="EXORA">
+  <section class="scene" id="exora" data-shape="3" data-x="0.26" data-title="EXORA">
     <div class="sticky"><div class="wrap">
-      <div class="scene-inner right">
+      <div class="scene-inner">
         <p class="eyebrow fade">Disponible · <b>App Store</b></p>
         <h2 class="title"><span class="reveal-line"><span>EXORA</span></span><span class="reveal-line"><span><em>Finances</em></span></span></h2>
         <p class="lede fade">Mi app de finanzas personales, ya publicada en la App Store. Registra gastos e ingresos, crea presupuestos y entiende tu dinero con estadísticas claras.</p>
@@ -289,9 +307,9 @@ footer { padding-block: 2rem 6rem; font-family: var(--mono); font-size: .7rem; l
     </div></div>
   </section>
 
-  <section class="scene" id="pacas-yadira" data-shape="7" data-x="0.26" data-title="Pacas Yadira">
+  <section class="scene" id="pacas-yadira" data-shape="7" data-x="-0.26" data-title="Pacas Yadira">
     <div class="sticky"><div class="wrap">
-      <div class="scene-inner">
+      <div class="scene-inner right">
         <p class="eyebrow fade">Cliente · <b>Sistema de gestión</b></p>
         <h2 class="title"><span class="reveal-line"><span>Pacas</span></span><span class="reveal-line"><span><em>Yadira</em></span></span></h2>
         <p class="lede fade">Sistema de almacén, ventas y logística para un negocio de ropa de paca. Cada paca recibe un código único que se escanea al entrar a bodega y al venderse.</p>
@@ -305,9 +323,9 @@ footer { padding-block: 2rem 6rem; font-family: var(--mono); font-size: .7rem; l
     </div></div>
   </section>
 
-  <section class="scene" id="cubicacion" data-shape="4" data-x="-0.25" data-title="Cubicación y Rutas">
+  <section class="scene" id="cubicacion" data-shape="4" data-x="0.26" data-title="Cubicación y Rutas">
     <div class="sticky"><div class="wrap">
-      <div class="scene-inner right">
+      <div class="scene-inner">
         <p class="eyebrow fade">Proyecto · <b>Logística</b></p>
         <h2 class="title"><span class="reveal-line"><span>Cubicación</span></span><span class="reveal-line"><span><em>&amp; Rutas</em></span></span></h2>
         <p class="lede fade">Optimización de carga y rutas para transporte consolidado. Registra paquetes, asigna tráileres, calcula el acomodo óptimo en m³ y lo muestra en 2D y 3D.</p>
@@ -320,9 +338,9 @@ footer { padding-block: 2rem 6rem; font-family: var(--mono); font-size: .7rem; l
     </div></div>
   </section>
 
-  <section class="scene" id="algoritmos" data-shape="5" data-x="0.25" data-title="Learn Algorithms">
+  <section class="scene" id="algoritmos" data-shape="5" data-x="-0.26" data-title="Learn Algorithms">
     <div class="sticky"><div class="wrap">
-      <div class="scene-inner">
+      <div class="scene-inner right">
         <p class="eyebrow fade">En curso · <b>24 semanas</b></p>
         <h2 class="title"><span class="reveal-line"><span>Learn</span></span><span class="reveal-line"><span><em>Algorithms</em></span></span></h2>
         <p class="lede fade">Mi ruta de algoritmos y estructuras de datos en LeetCode, de fundamentos a nivel entrevista técnica. Cada solución trae explicación, complejidad y lo que aprendí.</p>
@@ -550,6 +568,23 @@ footer { padding-block: 2rem 6rem; font-family: var(--mono); font-size: .7rem; l
       }
     }
     shapes.push({ p: sampleSegs(segs), view: { rx: 0.3, ry: 0.55, s: 0.95 } });
+  }
+
+  // 8 — street grid with a bundled delivery route (VYGO)
+  {
+    const segs = [], g = -0.45, route = [[-1.2, -0.9], [-0.6, -0.9], [-0.6, -0.3], [0, -0.3], [0, 0.3], [0.6, 0.3], [0.6, 0.9], [1.2, 0.9]];
+    for (let i = -2; i <= 2; i++) {
+      segs.push([i * 0.6, g, -1.3, i * 0.6, g, 1.3], [-1.3, g, i * 0.6, 1.3, g, i * 0.6]);
+    }
+    for (let rep = 0; rep < 3; rep++) for (let i = 0; i < route.length - 1; i++) {
+      const [x0, z0] = route[i], [x1, z1] = route[i + 1];
+      segs.push([x0, g + 0.04, z0, x1, g + 0.04, z1]);
+    }
+    for (const [x, z] of [route[0], [-0.6, -0.3], [0.6, 0.3], route[route.length - 1]]) {
+      segs.push([x, g, z, x, g + 0.45, z]);
+      for (let rep = 0; rep < 2; rep++) circle(x, g + 0.58, z, 0.12, 18, segs);
+    }
+    shapes.push({ p: sampleSegs(segs), view: { rx: 0.62, ry: 0.5, s: 1 } });
   }
 
   const delay = new Float32Array(N), dir = new Float32Array(N * 3);

@@ -8,6 +8,7 @@ Sitio personal con narrativa por scroll: un campo de partículas se transforma e
 |---|---|
 | Inicio | Esfera |
 | Sobre mí | Superficie de onda |
+| [VYGO](https://github.com/VYGO-Bug404/VYGO) · Ganador HackMTY 2026 | Mapa con ruta de reparto |
 | [Algorithm City](https://github.com/LUISGABUAS/Algorithm-City) | Ciudad |
 | [EXORA Finances](https://apps.apple.com/mx/app/exora-finances/id6781416549) | Teléfono con gráfica |
 | [Pacas Yadira](https://github.com/LUISGABUAS/PROYECTO-V2) | Rack de almacén |
