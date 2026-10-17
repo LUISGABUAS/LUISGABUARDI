@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Luis Gabuardi</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Luis Gabuardi — Full-Stack & Mobile Developer en NESB. Estudiante de Ingeniería en Tecnología de Software en FIME UANL.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a fixed particle "film" behind sticky scenes; each scene holds one frame while the particles morph to the next. */
+:root {
+  --bg: #ECEDEF;
+  --fg: #121418;
+  --muted: #5D626C;
+  --line: #C8CBD1;
+  --accent: #3D5882;
+  --particle: #1B1E24;
+  --display: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --body: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B0C0F; --fg: #E8E6E1; --muted: #8C9099; --line: #24272D; --accent: #9CB1D2; --particle: #DADBE0;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B0C0F; --fg: #E8E6E1; --muted: #8C9099; --line: #24272D; --accent: #9CB1D2; --particle: #DADBE0;
+  color-scheme: dark;
+}
+
+html, body { overflow-x: clip; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--body); font-size: 17px; line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+::selection { background: var(--accent); color: var(--bg); }
+:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
+
+#film { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+main { position: relative; z-index: 1; }
+.wrap { max-width: 1320px; margin: 0 auto; padding-left: calc(var(--gutter-l) + 1.5vw); padding-right: calc(var(--gutter-r) + 1.5vw); }
+
+/* Chrome: nav + scrubber */
+.nav {
+  position: fixed; inset: 0 0 auto; z-index: 5;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 1.1rem); padding-bottom: 1rem;
+  padding-left: calc(var(--gutter-l) + 1.5vw); padding-right: calc(var(--gutter-r) + 1.5vw);
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+}
+.nav .mark { font-family: var(--display); font-weight: 600; font-size: 1.05rem; letter-spacing: 0; text-transform: none; text-decoration: none; }
+.nav ul { display: flex; gap: clamp(1rem, 3vw, 2.5rem); list-style: none; margin: 0; padding: 0; }
+.nav ul a { text-decoration: none; color: var(--muted); transition: color .3s; }
+.nav ul a:hover { color: var(--fg); }
+
+.scrubber {
+  position: fixed; inset: auto 0 0; z-index: 5;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem); padding-top: .8rem;
+  padding-left: calc(var(--gutter-l) + 1.5vw); padding-right: calc(var(--gutter-r) + 1.5vw);
+  display: grid; grid-template-columns: auto 1fr auto; gap: 1.25rem; align-items: center;
+  font-family: var(--mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.scrubber .bar { height: 1px; background: var(--line); position: relative; }
+.scrubber .bar i { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--fg); }
+.scrubber .bar i::after { content: ""; position: absolute; right: -3px; top: -3px; width: 7px; height: 7px; border-radius: 50%; background: var(--fg); }
+.scrubber .rec { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: .6rem; vertical-align: middle; animation: blink 1.6s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Shared type */
+.eyebrow { font-family: var(--mono); font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.eyebrow b { color: var(--fg); font-weight: 500; }
+.reveal-line { display: block; overflow: hidden; padding: .14em .04em .2em; margin: -.14em -.04em -.2em; }
+.reveal-line > span { display: inline-block; }
+em { font-style: normal; }
+.name em, .title em, .big em, .h2 em { color: var(--muted); font-weight: 300; }
+
+/* Hero */
+.hero { height: 210vh; }
+.sticky { position: sticky; top: 0; height: 100vh; height: 100svh; }
+.hero-inner { height: 100%; display: grid; grid-template-rows: 1fr auto auto; gap: 2rem; padding-block: 6.5rem 5.5rem; }
+.hero .eyebrow { align-self: end; }
+.name {
+  font-family: var(--display); font-weight: 600; margin: 0;
+  font-size: clamp(4rem, 16.5vw, 15rem); line-height: .86; letter-spacing: -.055em;
+  font-variation-settings: "opsz" 32; transform-origin: left bottom;
+}
+.name em { padding-left: 0; }
+.hero-foot { display: flex; justify-content: space-between; align-items: end; gap: 2rem; flex-wrap: wrap; }
+.hero-foot p { max-width: 30rem; margin: 0; font-size: clamp(1rem, 1.3vw, 1.15rem); color: var(--muted); font-weight: 400; }
+.hint { font-family: var(--mono); font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+
+/* Statement */
+.about { height: 280vh; }
+.about .sticky { display: grid; align-items: center; }
+.about-inner { display: grid; gap: 2.5rem; max-width: 62rem; }
+.statement {
+  font-family: var(--display); font-weight: 500; margin: 0;
+  font-size: clamp(1.9rem, 4.2vw, 3.9rem); line-height: 1.18; letter-spacing: -.03em; text-wrap: balance;
+  font-variation-settings: "opsz" 32;
+}
+.statement .w { display: inline-block; white-space: pre; }
+.statement em { color: var(--accent); }
+
+/* Project scenes */
+.scene { height: 240vh; }
+.scene .sticky { display: flex; align-items: center; }
+.scene .wrap { width: 100%; display: flex; }
+.scene-inner { width: min(34rem, 100%); display: grid; gap: 1.4rem; position: relative; }
+.scene-inner.right { margin-left: auto; }
+.title {
+  font-family: var(--display); font-weight: 600; margin: 0;
+  font-size: clamp(3rem, 7.4vw, 7rem); line-height: .92; letter-spacing: -.045em;
+  font-variation-settings: "opsz" 32; text-wrap: balance;
+}
+.lede { margin: 0; font-size: clamp(1.02rem, 1.25vw, 1.15rem); font-weight: 400; max-width: 30rem; }
+.facts { list-style: none; margin: .4rem 0 0; padding: 0; display: grid; border-top: 1px solid var(--line); }
+.facts li { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; padding: .75rem 0; border-bottom: 1px solid var(--line); font-size: .92rem; }
+.facts li > span:first-child { font-family: var(--mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding-top: .2rem; }
+.links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.link {
+  font-family: var(--mono); font-size: .74rem; letter-spacing: .12em; text-transform: uppercase;
+  text-decoration: none; padding-bottom: .2rem; border-bottom: 1px solid var(--fg); width: fit-content;
+  transition: color .3s, border-color .3s;
+}
+.link:hover { color: var(--accent); border-color: var(--accent); }
+.tag { font-family: var(--mono); font-size: .78rem; color: var(--accent); margin: 0; }
+
+/* More work + stack */
+.more { padding-block: 22vh 16vh; }
+.more-head { display: flex; justify-content: space-between; align-items: end; gap: 2rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.h2 { font-family: var(--display); font-weight: 600; font-size: clamp(2.4rem, 5vw, 4.5rem); line-height: 1; letter-spacing: -.04em; margin: 0; font-variation-settings: "opsz" 32; }
+.work { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.work li { border-bottom: 1px solid var(--line); }
+.work a {
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.6fr) minmax(0, 1fr) auto; gap: 2rem; align-items: baseline;
+  padding: 1.6rem 0; text-decoration: none; transition: padding .45s cubic-bezier(.2,.7,.2,1);
+}
+.work a:hover { padding-left: 1rem; }
+.work .wn { font-family: var(--display); font-weight: 600; font-size: clamp(1.4rem, 2.2vw, 1.9rem); line-height: 1.15; letter-spacing: -.03em; }
+.work .wd { color: var(--muted); font-weight: 400; }
+.work .ws { font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; color: var(--muted); }
+.work .wa { font-family: var(--mono); font-size: .9rem; transition: transform .45s; }
+.work a:hover .wa { transform: translate(3px, -3px); }
+
+.stack { padding-block: 10vh 22vh; }
+.marquee { overflow: hidden; display: grid; gap: .4rem; margin-block: 3rem 4rem; }
+.track {
+  white-space: nowrap; font-family: var(--display); font-weight: 600; font-size: clamp(2.6rem, 7vw, 6.5rem);
+  line-height: 1.05; letter-spacing: -.035em; will-change: transform;
+}
+.track span { color: var(--muted); padding: 0 .35em; font-weight: 300; }
+.track.outline { color: transparent; -webkit-text-stroke: 1px var(--fg); }
+.track.outline span { -webkit-text-stroke: 0; }
+.groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+.groups div { border-top: 1px solid var(--fg); padding-top: 1rem; display: grid; gap: .5rem; align-content: start; }
+.groups p { margin: 0; }
+.groups .eyebrow { margin-bottom: .4rem; }
+
+/* Contact */
+.contact { height: 200vh; }
+.contact .sticky { display: grid; align-items: center; }
+.contact-inner { display: grid; gap: 2.5rem; justify-items: start; }
+.big {
+  font-family: var(--display); font-weight: 600; margin: 0;
+  font-size: clamp(3.4rem, 11vw, 10.5rem); line-height: .9; letter-spacing: -.05em; font-variation-settings: "opsz" 32;
+}
+.mail { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.mail span { font-family: var(--body); font-size: clamp(1.1rem, 2.2vw, 1.7rem); font-weight: 400; user-select: all; overflow-wrap: anywhere; }
+.copy {
+  font-family: var(--mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase;
+  background: none; color: var(--fg); border: 1px solid var(--line); border-radius: 999px; padding: .5rem .95rem; cursor: pointer;
+  transition: border-color .3s, color .3s;
+}
+.copy:hover { border-color: var(--fg); }
+footer { padding-block: 2rem 6rem; font-family: var(--mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+@media (max-width: 760px) {
+  .nav ul { gap: 1rem; }
+  .nav ul li:nth-child(1) { display: none; }
+  .scrubber { grid-template-columns: auto 1fr; }
+  .scrubber .scene-name { display: none; }
+  .hero-inner { padding-block: 5.5rem 4.5rem; }
+  .scene .sticky { align-items: flex-end; }
+  .scene .sticky::before {
+    content: ""; position: absolute; inset: auto 0 0; height: 72%;
+    background: linear-gradient(to top, var(--bg) 55%, transparent); pointer-events: none;
+  }
+  .scene .wrap { position: relative; padding-bottom: 4.5rem; }
+  .scene-inner { gap: 1rem; }
+  .facts li { grid-template-columns: 6rem 1fr; padding: .55rem 0; font-size: .86rem; }
+  .work a { grid-template-columns: 1fr auto; gap: .35rem 1rem; }
+  .work .wd, .work .ws { grid-column: 1; }
+  .work .wa { grid-row: 1; grid-column: 2; }
+  .groups { grid-template-columns: 1fr; }
+  .about .sticky::before {
+    content: ""; position: absolute; inset: 0; background: color-mix(in srgb, var(--bg) 55%, transparent); pointer-events: none;
+  }
+  .about-inner, .contact-inner { position: relative; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scrubber .rec { animation: none; }
+  .work a, .work .wa { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="film" aria-hidden="true"></canvas>
+
+<nav class="nav" aria-label="Principal">
+  <a class="mark" href="#inicio">Luis G.</a>
+  <ul>
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#algorithm-city">Proyectos</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<div class="scrubber" aria-hidden="true">
+  <span><i class="rec"></i><span id="tc">00:00:00:00</span></span>
+  <div class="bar"><i id="bar"></i></div>
+  <span class="scene-name" id="sceneName">Inicio</span>
+</div>
+
+<main>
+  <section class="hero" id="inicio" data-shape="0" data-x="0.27" data-title="Inicio">
+    <div class="sticky">
+      <div class="wrap hero-inner">
+        <p class="eyebrow"><span class="fade-in">Full-Stack &amp; Mobile Developer · <b>NESB</b> · FIME UANL</span></p>
+        <h1 class="name"><span class="reveal-line line"><span>Luis</span></span><span class="reveal-line line"><span><em>Gabuardi</em></span></span></h1>
+        <div class="hero-foot">
+          <p class="fade-in">Construyo productos completos, de la app móvil al servidor, con UX cuidada y arquitectura que escala.</p>
+          <span class="hint fade-in">Desliza para reproducir ↓</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="sobre-mi" data-shape="1" data-x="0" data-y="0.18" data-title="Sobre mí">
+    <div class="sticky">
+      <div class="wrap about-inner">
+        <p class="eyebrow">Sobre mí</p>
+        <p class="statement">Estudio Ingeniería en Tecnología de Software en la FIME UANL y en <em>NESB</em> desarrollo sistemas ERP y SaaS para empresas. Me gusta llevar un producto completo: la app, la web, la base de datos y el detalle que hace que se sienta <em>bien</em> usarlo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" id="algorithm-city" data-shape="2" data-x="0.26" data-title="Algorithm City">
+    <div class="sticky"><div class="wrap">
+      <div class="scene-inner">
+        <p class="eyebrow fade">Proyecto · <b>Juego educativo</b></p>
+        <h2 class="title"><span class="reveal-line"><span>Algorithm</span></span><span class="reveal-line"><span><em>City</em></span></span></h2>
+        <p class="lede fade">Un RPG en pixel art para aprender Python, algoritmos y LeetCode escribiendo código de verdad. Empiezas de becario y terminas listo para una entrevista en Big Tech.</p>
+        <ul class="facts fade">
+          <li><span>Incluye</span><span>Clases guiadas, editor con pruebas, repaso espaciado y una ciudad para explorar</span></li>
+          <li><span>Stack</span><span>HTML, CSS y JavaScript puro. Sin frameworks ni dependencias</span></li>
+        </ul>
+        <div class="links fade"><a class="link" href="https://github.com/LUISGABUAS/Algorithm-City" target="_blank" rel="noopener">Ver en GitHub ↗</a></div>
+      </div>
+    </div></div>
+  </section>
+
+  <section class="scene" id="exora" data-shape="3" data-x="-0.26" data-title="EXORA">
+    <div class="sticky"><div class="wrap">
+      <div class="scene-inner right">
+        <p class="eyebrow fade">Disponible · <b>App Store</b></p>
+        <h2 class="title"><span class="reveal-line"><span>EXORA</span></span><span class="reveal-line"><span><em>Finances</em></span></span></h2>
+        <p class="lede fade">Mi app de finanzas personales, ya publicada en la App Store. Registra gastos e ingresos, crea presupuestos y entiende tu dinero con estadísticas claras.</p>
+        <ul class="facts fade">
+          <li><span>Stack</span><span>React Native · TypeScript · Supabase · RevenueCat</span></li>
+          <li><span>Estado</span><span>Publicada en la App Store para iPhone</span></li>
+        </ul>
+        <div class="links fade"><a class="link" href="https://apps.apple.com/mx/app/exora-finances/id6781416549" target="_blank" rel="noopener">Descargar en App Store ↗</a><a class="link" href="https://github.com/LUISGABUAS/EXORA" target="_blank" rel="noopener">GitHub ↗</a></div>
+      </div>
+    </div></div>
+  </section>
+
+  <section class="scene" id="pacas-yadira" data-shape="7" data-x="0.26" data-title="Pacas Yadira">
+    <div class="sticky"><div class="wrap">
+      <div class="scene-inner">
+        <p class="eyebrow fade">Cliente · <b>Sistema de gestión</b></p>
+        <h2 class="title"><span class="reveal-line"><span>Pacas</span></span><span class="reveal-line"><span><em>Yadira</em></span></span></h2>
+        <p class="lede fade">Sistema de almacén, ventas y logística para un negocio de ropa de paca. Cada paca recibe un código único que se escanea al entrar a bodega y al venderse.</p>
+        <ul class="facts fade">
+          <li><span>Módulos</span><span>Almacén, stock, ventas locales y foráneas, repartos, tickets, roles y auditoría</span></li>
+          <li><span>Stack</span><span>PHP · MySQL · AdminLTE · etiquetas Zebra ZPL</span></li>
+        </ul>
+        <p class="tag fade">Generada → Sin escanear → En bodega → Vendida</p>
+        <div class="links fade"><a class="link" href="https://github.com/LUISGABUAS/PROYECTO-V2" target="_blank" rel="noopener">Ver en GitHub ↗</a></div>
+      </div>
+    </div></div>
+  </section>
+
+  <section class="scene" id="cubicacion" data-shape="4" data-x="-0.25" data-title="Cubicación y Rutas">
+    <div class="sticky"><div class="wrap">
+      <div class="scene-inner right">
+        <p class="eyebrow fade">Proyecto · <b>Logística</b></p>
+        <h2 class="title"><span class="reveal-line"><span>Cubicación</span></span><span class="reveal-line"><span><em>&amp; Rutas</em></span></span></h2>
+        <p class="lede fade">Optimización de carga y rutas para transporte consolidado. Registra paquetes, asigna tráileres, calcula el acomodo óptimo en m³ y lo muestra en 2D y 3D.</p>
+        <ul class="facts fade">
+          <li><span>Mi parte</span><span>Todo el frontend: arquitectura, pantallas, visualización 2D/3D y conexión al backend</span></li>
+          <li><span>Stack</span><span>React 19 · TypeScript · Three.js · TanStack Query · Tailwind</span></li>
+        </ul>
+        <div class="links fade"><a class="link" href="https://github.com/LUISGABUAS/Algoritmos-Cubicacion---Rutas-Transporte-Consolidado" target="_blank" rel="noopener">Ver en GitHub ↗</a></div>
+      </div>
+    </div></div>
+  </section>
+
+  <section class="scene" id="algoritmos" data-shape="5" data-x="0.25" data-title="Learn Algorithms">
+    <div class="sticky"><div class="wrap">
+      <div class="scene-inner">
+        <p class="eyebrow fade">En curso · <b>24 semanas</b></p>
+        <h2 class="title"><span class="reveal-line"><span>Learn</span></span><span class="reveal-line"><span><em>Algorithms</em></span></span></h2>
+        <p class="lede fade">Mi ruta de algoritmos y estructuras de datos en LeetCode, de fundamentos a nivel entrevista técnica. Cada solución trae explicación, complejidad y lo que aprendí.</p>
+        <ul class="facts fade">
+          <li><span>Método</span><span>1 a 2 problemas al día. Repaso a los 3 días y a las 2 semanas</span></li>
+          <li><span>Ruta</span><span>Hash maps → árboles y heaps → grafos → programación dinámica</span></li>
+        </ul>
+        <p class="tag fade">O(n²) → O(n log n) → O(n)</p>
+        <div class="links fade"><a class="link" href="https://github.com/LUISGABUAS/Learn_Algorithms" target="_blank" rel="noopener">Ver en GitHub ↗</a></div>
+      </div>
+    </div></div>
+  </section>
+
+  <section class="more" id="mas" data-shape="6" data-x="0" data-title="Más trabajo">
+    <div class="wrap">
+      <div class="more-head reveal">
+        <h2 class="h2">Más <em>trabajo</em></h2>
+        <a class="link" href="https://github.com/LUISGABUAS" target="_blank" rel="noopener">Todo en GitHub ↗</a>
+      </div>
+      <ul class="work">
+        <li class="reveal"><a href="https://nesb.com.mx" target="_blank" rel="noopener">
+          <span class="wn">NESB</span><span class="wd">Sistemas ERP y SaaS empresariales para clientes reales</span><span class="ws">Full-Stack · Mobile</span><span class="wa">↗</span></a></li>
+        <li class="reveal"><a href="https://github.com/LUISGABUAS/saas-inventory" target="_blank" rel="noopener">
+          <span class="wn">SaaS Inventory</span><span class="wd">Gestión de almacén y ventas con acceso por roles</span><span class="ws">PHP · MySQL · Docker</span><span class="wa">↗</span></a></li>
+        <li class="reveal"><a href="https://github.com/LUISGABUAS/waitlist-expensia" target="_blank" rel="noopener">
+          <span class="wn">Expensia</span><span class="wd">Landing con lista de espera</span><span class="ws">Next.js</span><span class="wa">↗</span></a></li>
+      </ul>
+    </div>
+
+    <div class="stack" id="stack">
+      <div class="marquee" aria-label="Tecnologías">
+        <div class="track" id="t1">Swift <span>·</span> React Native <span>·</span> TypeScript <span>·</span> React <span>·</span> Next.js <span>·</span> Three.js <span>·</span> Swift <span>·</span> React Native <span>·</span> TypeScript <span>·</span> React</div>
+        <div class="track outline" id="t2">Supabase <span>·</span> PHP <span>·</span> MySQL <span>·</span> Docker <span>·</span> Python <span>·</span> Tailwind <span>·</span> Supabase <span>·</span> PHP <span>·</span> MySQL <span>·</span> Docker</div>
+      </div>
+      <div class="wrap">
+        <div class="groups">
+          <div class="reveal"><p class="eyebrow">Mobile</p><p>Swift</p><p>React Native</p><p>TypeScript</p></div>
+          <div class="reveal"><p class="eyebrow">Frontend</p><p>React · Next.js · Vite</p><p>Tailwind CSS</p><p>Three.js</p></div>
+          <div class="reveal"><p class="eyebrow">Backend e infraestructura</p><p>Supabase · MySQL</p><p>PHP · Python</p><p>Docker</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contacto" data-shape="0" data-x="0.22" data-title="Contacto">
+    <div class="sticky">
+      <div class="wrap contact-inner">
+        <p class="eyebrow">Contacto</p>
+        <h2 class="big"><span class="reveal-line"><span>¿Construimos</span></span><span class="reveal-line"><span><em>algo?</em></span></span></h2>
+        <div class="mail">
+          <span id="mail">luis209207@gmail.com</span>
+          <button class="copy" id="copy" type="button">Copiar</button>
+        </div>
+        <div class="links">
+          <a class="link" href="https://github.com/LUISGABUAS" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="link" href="https://www.linkedin.com/in/luis-felipe-alejandro-gabuardi-gonzalez-a482a4384/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a class="link" href="https://nesb.com.mx" target="_blank" rel="noopener">nesb.com.mx ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="wrap">
+    <span>© 2026 Luis Gabuardi</span>
+    <span>FIME UANL · NESB</span>
+  </footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = () => innerWidth < 760;
+
+  /* ---------- Particle film ---------- */
+  const cv = document.getElementById('film');
+  const ctx = cv.getContext('2d');
+  const N = innerWidth < 760 ? 1500 : 2800;
+  let seed = 11;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+  const shuffle = a => {
+    for (let i = a.length / 3 - 1; i > 0; i--) {
+      const j = Math.floor(rnd() * (i + 1));
+      for (let c = 0; c < 3; c++) { const t = a[i * 3 + c]; a[i * 3 + c] = a[j * 3 + c]; a[j * 3 + c] = t; }
+    }
+    return a;
+  };
+  const sampleSegs = segs => {
+    const lens = segs.map(s => Math.hypot(s[3] - s[0], s[4] - s[1], s[5] - s[2]));
+    const total = lens.reduce((a, b) => a + b, 0);
+    const out = new Float32Array(N * 3);
+    let si = 0, acc = 0;
+    for (let k = 0; k < N; k++) {
+      const d = (k + 0.5) / N * total;
+      while (si < segs.length - 1 && acc + lens[si] < d) { acc += lens[si]; si++; }
+      const s = segs[si], t = lens[si] ? (d - acc) / lens[si] : 0;
+      out[k * 3] = s[0] + (s[3] - s[0]) * t;
+      out[k * 3 + 1] = s[1] + (s[4] - s[1]) * t;
+      out[k * 3 + 2] = s[2] + (s[5] - s[2]) * t;
+    }
+    return shuffle(out);
+  };
+  const box = (x, y, z, w, h, d, segs) => {
+    const X = [x - w / 2, x + w / 2], Y = [y - h / 2, y + h / 2], Z = [z - d / 2, z + d / 2];
+    for (const yy of Y) for (const zz of Z) segs.push([X[0], yy, zz, X[1], yy, zz]);
+    for (const xx of X) for (const zz of Z) segs.push([xx, Y[0], zz, xx, Y[1], zz]);
+    for (const xx of X) for (const yy of Y) segs.push([xx, yy, Z[0], xx, yy, Z[1]]);
+  };
+  const rect = (x, y, w, h, z, segs) => {
+    const p = [[x - w / 2, y - h / 2], [x + w / 2, y - h / 2], [x + w / 2, y + h / 2], [x - w / 2, y + h / 2]];
+    for (let i = 0; i < 4; i++) { const a = p[i], b = p[(i + 1) % 4]; segs.push([a[0], a[1], z, b[0], b[1], z]); }
+  };
+  const circle = (cx, cy, cz, r, steps, segs) => {
+    for (let i = 0; i < steps; i++) {
+      const a0 = i / steps * Math.PI * 2, a1 = (i + 1) / steps * Math.PI * 2;
+      segs.push([cx + Math.cos(a0) * r, cy + Math.sin(a0) * r, cz, cx + Math.cos(a1) * r, cy + Math.sin(a1) * r, cz]);
+    }
+  };
+  const roundRect = (w, h, r, z, segs) => {
+    const pts = [], corners = [[w / 2 - r, h / 2 - r, 0], [-w / 2 + r, h / 2 - r, Math.PI / 2], [-w / 2 + r, -h / 2 + r, Math.PI], [w / 2 - r, -h / 2 + r, Math.PI * 1.5]];
+    for (const [cx, cy, a0] of corners) for (let i = 0; i <= 6; i++) { const a = a0 + i / 6 * Math.PI / 2; pts.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]); }
+    for (let i = 0; i < pts.length; i++) { const a = pts[i], b = pts[(i + 1) % pts.length]; segs.push([a[0], a[1], z, b[0], b[1], z]); }
+  };
+
+  const shapes = [];
+  // 0 — sphere (identity)
+  {
+    const p = new Float32Array(N * 3);
+    for (let i = 0; i < N; i++) {
+      const y = 1 - 2 * (i + 0.5) / N, r = Math.sqrt(1 - y * y), th = i * 2.399963;
+      p[i * 3] = Math.cos(th) * r; p[i * 3 + 1] = y; p[i * 3 + 2] = Math.sin(th) * r;
+    }
+    shapes.push({ p: shuffle(p), spin: 0.12, view: { rx: 0.3, ry: 0, s: 1 } });
+  }
+  // 1 — wave field (engineering)
+  {
+    const p = new Float32Array(N * 3), side = Math.ceil(Math.sqrt(N));
+    for (let i = 0; i < N; i++) {
+      p[i * 3] = ((i % side) / (side - 1) - 0.5) * 3.4;
+      p[i * 3 + 2] = (Math.floor(i / side) / (side - 1) - 0.5) * 3.4;
+    }
+    shapes.push({ p: shuffle(p), wave: true, view: { rx: 0.42, ry: 0.55, s: 1.05 } });
+  }
+  // 2 — city (Algorithm City)
+  {
+    const segs = [], base = -0.8;
+    for (let gx = 0; gx < 4; gx++) for (let gz = 0; gz < 4; gz++) {
+      const edge = Math.max(Math.abs(gx - 1.5), Math.abs(gz - 1.5));
+      const h = 0.35 + rnd() * 0.7 + (1.5 - edge) * 0.45;
+      const x = (gx - 1.5) * 0.5, z = (gz - 1.5) * 0.5;
+      box(x, base + h / 2, z, 0.34, h, 0.34, segs);
+      for (let f = base + 0.22; f < base + h - 0.1; f += 0.22) {
+        segs.push([x - .17, f, z + .17, x + .17, f, z + .17], [x + .17, f, z - .17, x + .17, f, z + .17]);
+      }
+    }
+    shapes.push({ p: sampleSegs(segs), view: { rx: 0.5, ry: 0.75, s: 1 } });
+  }
+  // 3 — phone with chart (EXORA)
+  {
+    const segs = [];
+    roundRect(1.0, 1.95, 0.16, 0.05, segs);
+    roundRect(1.0, 1.95, 0.16, -0.05, segs);
+    segs.push([-0.12, 0.86, 0.05, 0.12, 0.86, 0.05]);
+    circle(0, 0.55, 0.05, 0.17, 24, segs);
+    circle(0, 0.55, 0.05, 0.11, 18, segs);
+    const ys = [-0.12, -0.04, -0.08, 0.04, 0.0, 0.13, 0.09, 0.22, 0.28];
+    for (let i = 0; i < ys.length - 1; i++) {
+      const x0 = -0.36 + i * 0.09, x1 = x0 + 0.09;
+      segs.push([x0, ys[i], 0.05, x1, ys[i + 1], 0.05]);
+    }
+    segs.push([-0.38, -0.2, 0.05, 0.38, -0.2, 0.05]);
+    const hs = [0.14, 0.26, 0.18, 0.34, 0.22, 0.3, 0.4];
+    hs.forEach((h, i) => rect(-0.3 + i * 0.1, -0.78 + h / 2, 0.05, h, 0.05, segs));
+    shapes.push({ p: sampleSegs(segs), view: { rx: 0.08, ry: -0.4, s: 0.95 } });
+  }
+  // 4 — trailer with cargo (Cubicación)
+  {
+    const segs = [];
+    box(0, 0, 0, 2.6, 0.95, 0.95, segs);
+    for (let ix = 0; ix < 4; ix++) for (let iy = 0; iy < 2; iy++) for (let iz = 0; iz < 2; iz++) {
+      if (ix === 3 && iy === 1 && rnd() < 0.6) continue;
+      box(-1.06 + ix * 0.46, -0.24 + iy * 0.46, -0.24 + iz * 0.46, 0.42, 0.42, 0.42, segs);
+    }
+    for (const wx of [-0.95, 0.75, 1.05]) for (const wz of [-0.5, 0.5]) circle(wx, -0.6, wz, 0.12, 16, segs);
+    shapes.push({ p: sampleSegs(segs), view: { rx: 0.35, ry: -0.6, s: 0.92 } });
+  }
+  // 5 — binary tree (Learn Algorithms)
+  {
+    const segs = [], r = 0.055, pos = (L, i) => [((i + 0.5) / (1 << L) - 0.5) * 2.6, 0.95 - L * 0.45];
+    for (let L = 0; L < 5; L++) for (let i = 0; i < (1 << L); i++) {
+      const [x, y] = pos(L, i);
+      circle(x, y, 0, r, 12, segs);
+      if (L < 4) for (const c of [i * 2, i * 2 + 1]) {
+        const [cx, cy] = pos(L + 1, c), dx = cx - x, dy = cy - y, d = Math.hypot(dx, dy);
+        segs.push([x + dx / d * r, y + dy / d * r, 0, cx - dx / d * r, cy - dy / d * r, 0]);
+      }
+    }
+    shapes.push({ p: sampleSegs(segs), view: { rx: 0.05, ry: 0.3, s: 0.95 } });
+  }
+  // 6 — ring (more work)
+  {
+    const p = new Float32Array(N * 3);
+    for (let i = 0; i < N; i++) {
+      const u = rnd() * Math.PI * 2, v = rnd() * Math.PI * 2, rr = 0.2 * Math.sqrt(rnd());
+      p[i * 3] = (1.05 + rr * Math.cos(v)) * Math.cos(u);
+      p[i * 3 + 1] = rr * Math.sin(v);
+      p[i * 3 + 2] = (1.05 + rr * Math.cos(v)) * Math.sin(u);
+    }
+    shapes.push({ p, spin: 0.1, view: { rx: 1.05, ry: 0, s: 1.05 } });
+  }
+
+  // 7 — warehouse rack with bales (Pacas Yadira)
+  {
+    const segs = [], shelves = [-0.8, -0.24, 0.32];
+    for (const x of [-1.1, 1.1]) for (const z of [-0.3, 0.3]) segs.push([x, -0.8, z, x, 0.88, z]);
+    for (const y of shelves) {
+      segs.push([-1.1, y, -0.3, 1.1, y, -0.3], [-1.1, y, 0.3, 1.1, y, 0.3], [-1.1, y, -0.3, -1.1, y, 0.3], [1.1, y, -0.3, 1.1, y, 0.3]);
+      for (const bx of [-0.78, -0.26, 0.26, 0.78]) {
+        if (y > 0 && rnd() < 0.45) continue;
+        box(bx, y + 0.2, 0, 0.44, 0.38, 0.5, segs);
+        segs.push([bx - 0.22, y + 0.2, 0.25, bx + 0.22, y + 0.2, 0.25]);
+      }
+    }
+    shapes.push({ p: sampleSegs(segs), view: { rx: 0.3, ry: 0.55, s: 0.95 } });
+  }
+
+  const delay = new Float32Array(N), dir = new Float32Array(N * 3);
+  for (let k = 0; k < N; k++) {
+    delay[k] = rnd();
+    const a = rnd() * Math.PI * 2, b = Math.acos(2 * rnd() - 1);
+    dir[k * 3] = Math.sin(b) * Math.cos(a); dir[k * 3 + 1] = Math.cos(b); dir[k * 3 + 2] = Math.sin(b) * Math.sin(a);
+  }
+
+  const secs = [...document.querySelectorAll('[data-shape]')];
+  let W = 0, H = 0, dpr = 1, color = '#000', time = 0, last = performance.now(), frame = 0;
+  let mx = 0, my = 0, tmx = 0, tmy = 0, fadeIn = 0;
+
+  const resize = () => {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+  };
+  const readColor = () => { color = getComputedStyle(document.documentElement).getPropertyValue('--particle').trim() || '#888'; };
+  resize(); readColor();
+  addEventListener('resize', resize);
+  addEventListener('pointermove', e => { tmx = e.clientX / W - 0.5; tmy = e.clientY / H - 0.5; }, { passive: true });
+
+  const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+  const lerp = (a, b, t) => a + (b - a) * t;
+
+  const state = () => {
+    const vc = H / 2;
+    const cs = secs.map(s => { const r = s.getBoundingClientRect(); return r.top + r.height / 2; });
+    if (vc <= cs[0]) return { a: 0, b: 0, t: 0 };
+    for (let i = 0; i < cs.length - 1; i++) {
+      if (vc < cs[i + 1]) return { a: i, b: i + 1, t: smooth(0.26, 0.74, (vc - cs[i]) / (cs[i + 1] - cs[i])) };
+    }
+    return { a: cs.length - 1, b: cs.length - 1, t: 0 };
+  };
+
+  const pt = [0, 0, 0], pb = [0, 0, 0];
+  const getP = (s, k, out) => {
+    let x = s.p[k * 3], y = s.p[k * 3 + 1], z = s.p[k * 3 + 2];
+    if (s.wave) y = 0.16 * Math.sin(x * 2.3 + time * 0.9) + 0.1 * Math.cos(z * 3 + time * 0.6) - 0.1;
+    else if (s.spin) { const a = time * s.spin, c = Math.cos(a), sn = Math.sin(a), nx = x * c - z * sn; z = x * sn + z * c; x = nx; }
+    out[0] = x; out[1] = y; out[2] = z;
+  };
+
+  const draw = now => {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    if (!reduce) time += dt;
+    fadeIn = Math.min(1, fadeIn + dt * 0.7);
+    if (++frame % 30 === 0) readColor();
+    mx = lerp(mx, tmx, 0.04); my = lerp(my, tmy, 0.04);
+
+    const { a, b, t } = state();
+    const sA = shapes[+secs[a].dataset.shape], sB = shapes[+secs[b].dataset.shape];
+    const mob = isMobile();
+    const offX = mob ? 0 : lerp(+secs[a].dataset.x || 0, +secs[b].dataset.x || 0, t);
+    const offY = mob ? -0.2 : lerp(+secs[a].dataset.y || 0, +secs[b].dataset.y || 0, t);
+    const vA = sA.view, vB = sB.view;
+    const rx = lerp(vA.rx, vB.rx, t) + my * 0.18;
+    const ry = lerp(vA.ry, vB.ry, t) + Math.sin(time * 0.22) * 0.22 + mx * 0.35;
+    const S = Math.min(W, H) * (mob ? 0.27 : 0.3) * lerp(vA.s, vB.s, t);
+    const cx = W / 2 + offX * W, cy = H / 2 + offY * H;
+    const cX = Math.cos(rx), sX = Math.sin(rx), cY = Math.cos(ry), sY = Math.sin(ry);
+    const baseA = (mob ? 0.55 : 0.9) * fadeIn;
+    const size = (mob ? 1.15 : 1.35) * dpr;
+
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.fillStyle = color;
+
+    for (let k = 0; k < N; k++) {
+      getP(sA, k, pt);
+      let x = pt[0], y = pt[1], z = pt[2];
+      if (a !== b && t > 0) {
+        getP(sB, k, pb);
+        let tk = Math.min(1, Math.max(0, (t - delay[k] * 0.35) / 0.65));
+        tk = tk * tk * (3 - 2 * tk);
+        const burst = Math.sin(tk * Math.PI) * 0.28;
+        x = lerp(x, pb[0], tk) + dir[k * 3] * burst;
+        y = lerp(y, pb[1], tk) + dir[k * 3 + 1] * burst;
+        z = lerp(z, pb[2], tk) + dir[k * 3 + 2] * burst;
+      }
+      const x1 = x * cY + z * sY, z1 = -x * sY + z * cY;
+      const y2 = y * cX - z1 * sX, z2 = y * sX + z1 * cX;
+      const f = 3.4 / (3.4 - z2);
+      const alpha = baseA * Math.min(1, Math.max(0.12, 0.3 + (z2 + 1.3) / 2.6 * 0.7));
+      ctx.globalAlpha = alpha;
+      const sz = size * f;
+      ctx.fillRect((cx + x1 * S * f) * dpr, (cy - y2 * S * f) * dpr, sz, sz);
+    }
+    ctx.globalAlpha = 1;
+
+    // scrubber
+    const max = document.documentElement.scrollHeight - H;
+    const prog = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
+    bar.style.width = (prog * 100).toFixed(2) + '%';
+    const fr = Math.round(prog * 90 * 24), ff = fr % 24, ss = Math.floor(fr / 24) % 60, mm = Math.floor(fr / 1440);
+    const p2 = n => String(n).padStart(2, '0');
+    tc.textContent = `00:${p2(mm)}:${p2(ss)}:${p2(ff)}`;
+    const cur = secs.find(s => { const r = s.getBoundingClientRect(); return r.top <= H / 2 && r.bottom > H / 2; });
+    if (cur && sceneName.textContent !== cur.dataset.title) sceneName.textContent = cur.dataset.title;
+
+    requestAnimationFrame(draw);
+  };
+  const bar = document.getElementById('bar'), tc = document.getElementById('tc'), sceneName = document.getElementById('sceneName');
+  requestAnimationFrame(draw);
+
+  /* ---------- Copy email ---------- */
+  const copyBtn = document.getElementById('copy'), mail = document.getElementById('mail');
+  copyBtn.addEventListener('click', () => {
+    const done = () => { copyBtn.textContent = 'Copiado'; setTimeout(() => copyBtn.textContent = 'Copiar', 1800); };
+    const select = () => { const r = document.createRange(); r.selectNodeContents(mail); const s = getSelection(); s.removeAllRanges(); s.addRange(r); copyBtn.textContent = 'Seleccionado'; setTimeout(() => copyBtn.textContent = 'Copiar', 1800); };
+    try { navigator.clipboard.writeText(mail.textContent).then(done, select); } catch (e) { select(); }
+  });
+
+  /* ---------- Scroll choreography ---------- */
+  const st = document.querySelector('.statement');
+  const splitWords = el => {
+    [...el.childNodes].forEach(n => {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach(w => {
+          if (!w) return;
+          if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(' ')); return; }
+          const s = document.createElement('span'); s.className = 'w'; s.textContent = w; frag.appendChild(s);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1) { n.classList.add('w'); }
+    });
+  };
+  splitWords(st);
+
+  if (!window.gsap || !window.ScrollTrigger) return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  let lenis = null;
+  if (window.Lenis && !reduce) {
+    lenis = new Lenis({ lerp: 0.085, smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    const y = target.getBoundingClientRect().top + scrollY + (target.classList.contains('scene') ? innerHeight * 0.45 : 0);
+    lenis ? lenis.scrollTo(y, { duration: 2.2 }) : scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+  }));
+
+  if (reduce) return;
+
+  // Intro
+  gsap.from('.name .line > span', { yPercent: 108, duration: 1.6, ease: 'expo.out', stagger: 0.12, delay: 0.1 });
+  gsap.from('.hero .fade-in', { opacity: 0, y: 14, duration: 1.2, ease: 'power2.out', delay: 0.7, stagger: 0.12 });
+
+  // Hero dissolves into the film
+  gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom bottom', scrub: 1 } })
+    .to('.name', { letterSpacing: '0.06em', scale: 1.08, ease: 'none' }, 0)
+    .to('.hero-inner', { opacity: 0, y: -50, ease: 'power1.in' }, 0.15);
+
+  // Statement word by word
+  gsap.timeline({ scrollTrigger: { trigger: '.about', start: 'top 65%', end: 'bottom bottom', scrub: 0.8 } })
+    .from('.about .eyebrow', { opacity: 0, y: 20, duration: 0.6 })
+    .fromTo('.statement .w', { opacity: 0.12 }, { opacity: 1, stagger: 0.08, duration: 0.4, ease: 'none' }, 0.2)
+    .to({}, { duration: 1.4 })
+    .to('.about-inner', { opacity: 0, y: -40, duration: 0.9, ease: 'power1.in' });
+
+  // Project scenes
+  document.querySelectorAll('.scene').forEach(sc => {
+    gsap.timeline({ scrollTrigger: { trigger: sc, start: 'top 70%', end: 'bottom bottom', scrub: 0.8 } })
+      .from(sc.querySelectorAll('.reveal-line > span'), { yPercent: 110, duration: 1, stagger: 0.1, ease: 'power3.out' })
+      .from(sc.querySelectorAll('.fade'), { opacity: 0, y: 28, duration: 0.8, stagger: 0.1, ease: 'power2.out' }, 0.35)
+      .to({}, { duration: 2.2 })
+      .to(sc.querySelector('.scene-inner'), { opacity: 0, y: -40, duration: 0.9, ease: 'power1.in' });
+  });
+
+  // Lists
+  document.querySelectorAll('.reveal').forEach(el => {
+    gsap.from(el, { opacity: 0, y: 40, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 92%', end: 'top 65%', scrub: 1 } });
+  });
+
+  // Stack marquee moves with the scroll
+  gsap.fromTo('#t1', { xPercent: 0 }, { xPercent: -28, ease: 'none', scrollTrigger: { trigger: '.marquee', start: 'top bottom', end: 'bottom top', scrub: true } });
+  gsap.fromTo('#t2', { xPercent: -28 }, { xPercent: 0, ease: 'none', scrollTrigger: { trigger: '.marquee', start: 'top bottom', end: 'bottom top', scrub: true } });
+
+  // Contact
+  gsap.timeline({ scrollTrigger: { trigger: '.contact', start: 'top 70%', end: 'center center', scrub: 0.8 } })
+    .from('.contact .eyebrow', { opacity: 0, y: 20, duration: 0.5 })
+    .from('.contact .reveal-line > span', { yPercent: 110, duration: 1, stagger: 0.12, ease: 'power3.out' }, 0)
+    .from('.contact .mail, .contact .links', { opacity: 0, y: 24, duration: 0.7, stagger: 0.12 }, 0.5);
+})();
+</script>
+</body>
+</html>
