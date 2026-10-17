@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://luisgabuardi.pages.dev/sitemap.xml
