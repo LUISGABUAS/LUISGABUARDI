@@ -117,13 +117,13 @@ em { font-style: normal; }
 
 /* Project scenes */
 .scene { height: 240vh; }
-.scene .sticky { display: flex; align-items: center; }
+.scene .sticky { display: flex; align-items: center; padding-block: 4.5rem 3.5rem; }
 .scene .wrap { width: 100%; display: flex; }
 .scene-inner { width: min(34rem, 100%); display: grid; gap: 1.4rem; position: relative; }
 .scene-inner.right { margin-left: auto; }
 .title {
   font-family: var(--display); font-weight: 600; margin: 0;
-  font-size: clamp(3rem, 7.4vw, 7rem); line-height: .92; letter-spacing: -.045em;
+  font-size: clamp(2.4rem, min(7.4vw, 12svh), 7rem); line-height: .92; letter-spacing: -.045em;
   font-variation-settings: "opsz" 32; text-wrap: balance;
 }
 .lede { margin: 0; font-size: clamp(1.02rem, 1.25vw, 1.15rem); font-weight: 400; max-width: 30rem; }
@@ -188,6 +188,12 @@ em { font-style: normal; }
 .copy:hover { border-color: var(--fg); }
 footer { padding-block: 2rem 6rem; font-family: var(--mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 
+@media (max-height: 820px) and (min-width: 761px) {
+  .scene-inner { width: min(40rem, 100%); gap: .9rem; }
+  .lede { font-size: 1rem; line-height: 1.55; }
+  .facts { margin-top: 0; }
+  .facts li { padding: .45rem 0; font-size: .86rem; line-height: 1.5; }
+}
 @media (max-width: 760px) {
   .nav ul { gap: 1rem; }
   .nav ul li:nth-child(1) { display: none; }
@@ -263,16 +269,14 @@ footer { padding-block: 2rem 6rem; font-family: var(--mono); font-size: .7rem; l
   <section class="scene" id="vygo" data-shape="8" data-x="0.26" data-title="VYGO">
     <div class="sticky"><div class="wrap">
       <div class="scene-inner">
-        <p class="eyebrow fade">Ganador · <b>HackMTY 2026</b></p>
-        <h2 class="title"><span class="reveal-line"><span>VYGO</span></span><span class="reveal-line"><span><em>Copiloto de reparto</em></span></span></h2>
-        <p class="lede fade">Para repartidores que trabajan con Uber Eats, Rappi y DiDi Food al mismo tiempo. Un agente de aprendizaje por refuerzo decide qué pedidos aceptar y cómo juntarlos en una sola ruta, y explica cada decisión con números.</p>
+        <p class="eyebrow fade">Ganador · <b>HackMTY 2026</b> · Reto Infosys</p>
+        <h2 class="title"><span class="reveal-line"><span>VYGO</span></span></h2>
+        <p class="lede fade">Copiloto de reparto para quienes trabajan con Uber Eats, Rappi y DiDi Food al mismo tiempo. Un agente de aprendizaje por refuerzo decide qué pedidos aceptar y cómo juntarlos en una sola ruta, y explica cada decisión con números.</p>
         <ul class="facts fade">
-          <li><span>Reto</span><span>Infosys · “The Courier”</span></li>
-          <li><span>Resultado</span><span>En la simulación de un turno de 6 horas en Monterrey, la ganancia pasa de $102/h a $169/h con 35% menos kilómetros</span></li>
+          <li><span>Resultado</span><span>De $102/h a $169/h y 35% menos km en un turno simulado de 6 h en Monterrey</span></li>
           <li><span>Mi parte</span><span>Frontend mobile-first: mapa en vivo, recomendación del agente, ruta activa y login con Supabase</span></li>
           <li><span>Stack</span><span>React · TypeScript · MapLibre · Supabase · FastAPI · PPO</span></li>
         </ul>
-        <p class="tag fade">$102/h → $169/h · −35% km</p>
         <div class="links fade"><a class="link" href="https://github.com/VYGO-Bug404/VYGO" target="_blank" rel="noopener">Ver en GitHub ↗</a></div>
       </div>
     </div></div>
